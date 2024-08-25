@@ -11,7 +11,6 @@ This project implements a multithreaded proxy server in C with caching capabilit
 - Configurable listening port
 - Error handling and logging
 
-## Components
 
 
 ## Prerequisites
@@ -22,5 +21,4 @@ To compile and run this project, you need:
 - POSIX-compliant operating system (Linux, macOS, etc.)
 - pthread library
 
-## Compilation
 
