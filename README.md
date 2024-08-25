@@ -24,9 +24,9 @@ To compile and run this project, you need:
 ## For Feedback and Suggestions
 Contact - vanshajgupta37@gmail.com
 
-# License
+### License
 This project is open-source and available under the MIT License.
 
 
-# Authors
-[Vanshaj Gupta]
+### Authors
+Vanshaj Gupta
