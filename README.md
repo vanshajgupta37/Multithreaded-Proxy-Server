@@ -17,8 +17,15 @@ This project implements a multithreaded proxy server in C with caching capabilit
 
 To compile and run this project, you need:
 
-- A C compiler (e.g., gcc)
-- POSIX-compliant operating system (Linux, macOS, etc.)
-- pthread library
+- A Linux-based Environment
+- GCC for compiling the C code
 
 
+License
+This project is open-source and available under the MIT License.
+
+## For Feedback and Suggestions
+Contact - vanshajgupta37@gmail.com
+
+Authors
+[Vanshaj Gupta]
