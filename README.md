@@ -21,11 +21,12 @@ To compile and run this project, you need:
 - GCC for compiling the C code
 
 
-License
-This project is open-source and available under the MIT License.
-
 ## For Feedback and Suggestions
 Contact - vanshajgupta37@gmail.com
 
-Authors
+# License
+This project is open-source and available under the MIT License.
+
+
+# Authors
 [Vanshaj Gupta]
