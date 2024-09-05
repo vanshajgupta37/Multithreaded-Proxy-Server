@@ -38,6 +38,9 @@ struct cache_store{
 cache_store* find(char* url);
 int add_cache_store(char* data, int size, char* url);
 void remove_cache_store();
+cache_store* head;
+int cache_size;
+
 
 cache_store* find(char* url){
 
@@ -51,11 +54,11 @@ cache_store* find(char* url){
         while (site!=NULL)
         {
             if(!strcmp(site->url,url)){
-				printf("LRU Time Track Before : %ld", site->lru_time_track);
+				printf("LRU Time Track Before : %ld", site->lru_time_record);
                 printf("\nurl found\n");
 				// Updating the time_track
-				site->lru_time_track = time(NULL);
-				printf("LRU Time Track After : %ld", site->lru_time_track);
+				site->lru_time_record = time(NULL);
+				printf("LRU Time Track After : %ld", site->lru_time_record);
 				break;
             }
             site=site->next;
@@ -74,7 +77,7 @@ cache_store* find(char* url){
 
 
 void remove_cache_store(){
-    // If cache is not empty searches for the node which has the least lru_time_track and deletes it
+    // If cache is not empty searches for the node which has the least lru_time_record and deletes it
     cache_store * p ;  	// cache_store Pointer (Prev. Pointer)
 	cache_store * q ;		// cache_store Pointer (Next Pointer)
 	cache_store * temp;	// Cache element to remove
@@ -84,7 +87,7 @@ void remove_cache_store(){
 	if( head != NULL) { // Cache != empty
 		for (q = head, p = head, temp =head ; q -> next != NULL; 
 			q = q -> next) { // Iterate through entire cache and search for oldest time track
-			if(( (q -> next) -> lru_time_track) < (temp -> lru_time_track)) {
+			if(( (q -> next) -> lru_time_record) < (temp -> lru_time_record)) {
 				temp = q -> next;
 				p = q;
 			}
@@ -135,7 +138,7 @@ int add_cache_store(char* data,int size,char* url){
 		strcpy(element->data,data); 
         element -> url = (char*)malloc(1+( strlen( url )*sizeof(char)  )); // Allocating memory for the request to be stored in the cache element (as a key)
 		strcpy( element -> url, url );
-		element->lru_time_track=time(NULL);    // Updating the time_track
+		element->lru_time_record=time(NULL);    // Updating the time_track
         element->next=head; 
         element->len=size;
         head=element;
@@ -153,8 +156,7 @@ int add_cache_store(char* data,int size,char* url){
 
 
 
-cache_store* head;
-int cache_size;
+
 
 
 
