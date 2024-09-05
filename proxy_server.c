@@ -16,7 +16,10 @@
 #include <pthread.h>
 
 
-#define MAX_CLIENTS 20
+#define MAX_CLIENTS 350  //max number of client requests served at a time
+#define MAX_BYTES 4096   //max allowed size of request/response
+#define MAX_SIZE 200*(1<<20)     //size of the cache
+#define MAX_ELEMENT_SIZE 10*(1<<20)     //max size of an element in cache
 
 pthread_t t_id[MAX_CLIENTS];
 int port_number = 8080;
@@ -209,7 +212,7 @@ int sendErrorMessage(int socket, int status_code)
 }
 
 
-int connectRemoteServer(char* host_addr, int port_num)
+int connectRemoteServer(char* host_addr, int port_number)
 {
 	// Creating Socket for remote server ---------------------------
 
@@ -235,7 +238,7 @@ int connectRemoteServer(char* host_addr, int port_num)
 
 	bzero((char*)&server_addr, sizeof(server_addr));
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(port_num);
+	server_addr.sin_port = htons(port_number);
 
 	bcopy((char *)host->h_addr,(char *)&server_addr.sin_addr.s_addr,host->h_length);
 
@@ -350,9 +353,9 @@ int checkHTTPversion(char *msg)
 
 void* thread_fn(void* socketNew)
 {
-	sem_wait(&seamaphore); 
+	sem_wait(&semaphore); 
 	int p;
-	sem_getvalue(&seamaphore,&p);
+	sem_getvalue(&semaphore,&p);
 	printf("semaphore value:%d\n",p);
     int* t= (int*)(socketNew);
 	int socket=*t;           // Socket is socket descriptor of the connected Client
@@ -408,7 +411,7 @@ void* thread_fn(void* socketNew)
 		printf("Data retrived from the Cache\n\n");
 		printf("%s\n\n",response);
 		// close(socketNew);
-		// sem_post(&seamaphore);
+		// sem_post(&semaphore);
 		// return NULL;
 	}
 	
@@ -467,9 +470,9 @@ void* thread_fn(void* socketNew)
 	shutdown(socket, SHUT_RDWR);
 	close(socket);
 	free(buffer);
-	sem_post(&seamaphore);	
+	sem_post(&semaphore);	
 	
-	sem_getvalue(&seamaphore,&p);
+	sem_getvalue(&semaphore,&p);
 	printf("Semaphore post value:%d\n",p);
 	free(tempReq);
 	return NULL;
@@ -482,7 +485,7 @@ int main(int argc, char* argv[]){
     sem_init(&semaphore,0,  MAX_CLIENTS);
 
     pthread_mutex_init(&lock, NULL);  // using NULL because in C their exists garbage value by default
-    if(argv == 2){
+    if(argc == 2){
         port_number = atoi(argv[1]);
         // ./proxy 8282 (for example)
         // so, here port_number = 8282 (for this particular case only)
@@ -500,19 +503,19 @@ int main(int argc, char* argv[]){
     }
     
     int reuse = 1;
-    if(setsocketopt(proxy_socket_ID, SOL_SOCKET, SO_REUSEADDR, (const char*)&reuse, sizeof(reuse))<0){
+    if(setsockopt(proxy_socket_ID, SOL_SOCKET, SO_REUSEADDR, (const char*)&reuse, sizeof(reuse))<0){
         perror("setSockOpt failed\n");
     }
 
     bzero((char*)&server_addr, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port_number);
-    server.sin_addr.s_addr  INADDR_ANY;
+    server_addr.sin_addr.s_addr  INADDR_ANY;
     if(bind(proxy_socket_ID, (struct sockaddr*)&server_addr, sizeof(server_addr)<0)){
         perror("Port is not available, Kindly try another Port Number!!\n");
         exit(1);
     }
-    prtinf("Binding on port %d\n", port_num);
+    prtinf("Binding on port %d\n", port_number);
     int listen_status = listen(proxy_socket_ID, MAX_CLIENTS);
     if(listen_status<0){
         perror("Error in listening\n");
