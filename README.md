@@ -1,4 +1,4 @@
-# Multi-Threaded Proxy Server with Caching
+# Multithreaded-Proxy-Server in C
 
 ## Overview
 
