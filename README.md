@@ -134,12 +134,12 @@ This project implements a multi-threaded proxy server capable of handling multip
 4. Run the proxy server:
 
     ```bash
-    $ ./proxy <port no.> 
+    $ ./cache_proxy <port no.> 
     ```
 
     Example:
     ```bash
-    $ ./proxy 8080
+    $ ./cache_proxy 8060
     ```
 
 5. Open the proxy in your browser:
@@ -150,7 +150,12 @@ This project implements a multi-threaded proxy server capable of handling multip
 
     Example:
     ```bash
-    Open http://localhost:8080/https://www.cam.ac.uk/
+    Open http://localhost:8060/http://www.cam.ac.uk/
+
+    Some more HTTP examples to try upon - 
+    http://localhost:8060/http://www.testingmcafeesites.com/
+    http://localhost:8060/http://www.archive.org
+    http://localhost:8060/http://www.cs.washington.edu
     ```
 
 **Note:** This code can only be run on a Linux machine.
