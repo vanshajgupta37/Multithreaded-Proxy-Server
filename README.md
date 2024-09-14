@@ -151,10 +151,16 @@ This project implements a multi-threaded proxy server capable of handling multip
     Example:
     ```bash
     Open http://localhost:8060/http://www.cam.ac.uk/
+    ```
 
     Some more HTTP examples to try upon - 
+    ```bash
     http://localhost:8060/http://www.testingmcafeesites.com/
+    ```
+    ```bash
     http://localhost:8060/http://www.archive.org
+    ```
+    ```bash
     http://localhost:8060/http://www.cs.washington.edu
     ```
 
