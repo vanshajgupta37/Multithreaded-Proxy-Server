@@ -168,6 +168,11 @@ This project implements a multi-threaded proxy server capable of handling multip
 
 ---
 
+### Video Tutorial to run the project: 
+[![Watch the video](https://img.youtube.com/vi/11FcRm1qk6g/hqdefault.jpg)](https://youtu.be/11FcRm1qk6g?si=jygSZohk-bnjUeM7)
+
+---
+
 ## Potential Enhancements
 
 - **Multiprocessing:** The code can be extended to use multiprocessing for better parallelism and performance.
